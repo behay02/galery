@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для Лизы 💗</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Georgia', serif;
+    background: #1a1a2e;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  /* === ЛЕТЯЩИЕ СЕРДЕЧКИ (фон) === */
+  .bg-heart {
+    position: fixed; top: 0; pointer-events: none; z-index: 1;
+    animation: fall linear infinite;
+    opacity: 0.5;
+  }
+  @keyframes fall {
+    from { transform: translateY(-10vh) rotate(0deg); }
+    to   { transform: translateY(110vh) rotate(360deg); }
+  }
+
+  /* === СЕКЦИИ === */
+  section {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 60px 20px; text-align: center;
+  }
+
+  /* === 1. ЗАГЛАВНАЯ === */
+  .hero h1 {
+    font-size: clamp(2.5em, 8vw, 5em);
+    color: #ff6b9d;
+    text-shadow: 0 0 30px #ff6b9d, 0 0 60px #ff8fb8;
+    animation: pulse 2.5s ease-in-out infinite;
+    letter-spacing: 3px;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+  .hero .sub {
+    margin-top: 25px; font-size: 1.4em; color: #ffb6d0;
+    font-style: italic; opacity: 0;
+    animation: fadeUp 2s ease 1s forwards;
+  }
+  .hero .scroll-hint {
+    position: absolute; bottom: 40px; color: #ff6b9d;
+    font-size: 1em; animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === 2. ТАЙМЛАЙН «НАША ИСТОРИЯ» === */
+  .timeline-title {
+    color: #ff6b9d; font-size: clamp(1.8em, 5vw, 2.5em);
+    margin-bottom: 40px;
+    text-shadow: 0 0 25px rgba(255,107,157,0.6);
+  }
+  .timeline { max-width: 800px; width: 100%; margin: 20px auto; position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 50%; top: 0;
+    width: 3px; height: 100%; background: #ff6b9d;
+    transform: translateX(-50%);
+  }
+  .event {
+    background: #16213e; padding: 25px; border-radius: 15px;
+    margin: 30px 0; width: 42%; text-align: left;
+    box-shadow: 0 10px 30px rgba(255,107,157,0.2);
+    border: 1px solid #ff6b9d;
+    position: relative;
+  }
+  .event:nth-child(odd) { margin-left: 0; }
+  .event:nth-child(even) { margin-left: 58%; }
+  .date { color: #ff6b9d; font-weight: bold; }
+  .emoji { font-size: 1.5em; }
+
+  /* === 3. ПИСЬМО (печатающийся текст) === */
+  .letter-box {
+    background: rgba(22,33,62,0.85);
+    border: 2px dashed #ff6b9d;
+    border-radius: 25px;
+    padding: 45px 35px;
+    max-width: 620px;
+    box-shadow: 0 20px 60px rgba(255,107,157,0.3);
+    backdrop-filter: blur(8px);
+  }
+  #typed {
+    font-size: 1.25em; line-height: 2; white-space: pre-wrap;
+    color: #ffe0ec; text-align: left;
+  }
+  .cursor {
+    display: inline-block; width: 10px; height: 20px;
+    background: #ff6b9d; margin-left: 3px;
+    animation: blink 0.9s infinite; vertical-align: middle;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* === 4. СЧЁТЧИК === */
+  .counter-title { color: #ffb6d0; font-size: 1.5em; margin-bottom: 25px; }
+  .counter-num {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(2em, 7vw, 3.5em);
+    font-weight: bold; color: #fff;
+    text-shadow: 0 0 20px #ff6b9d, 0 0 40px #ff6b9d;
+    margin: 15px 0;
+  }
+  .counter-sub { color: #ffb6d0; font-size: 1.2em; opacity: 0.9; }
+
+  /* === 5. ПРИЧИНЫ === */
+  .reasons-title { color: #ff6b9d; font-size: clamp(1.8em, 5vw, 2.2em); margin-bottom: 40px;
+    text-shadow: 0 0 25px rgba(255,107,157,0.6); }
+  .cards { display: flex; flex-wrap: wrap; gap: 20px;
+    justify-content: center; max-width: 900px; }
+  .card {
+    background: #16213e;
+    border-radius: 20px; padding: 30px 25px;
+    width: 250px; box-shadow: 0 12px 35px rgba(255,107,157,0.25);
+    transition: transform 0.3s;
+    border-top: 5px solid #ff6b9d;
+  }
+  .card:hover { transform: translateY(-10px) scale(1.03); }
+  .card .icon { font-size: 2.5em; margin-bottom: 12px; }
+  .card p { color: #ffe0ec; font-size: 1.05em; line-height: 1.6; }
+
+  /* === 6. БУКЕТ === */
+  .bouquet-title { color: #ff6b9d; font-size: clamp(1.8em, 5vw, 2em);
+    margin-bottom: 10px;
+    text-shadow: 0 0 25px rgba(255,107,157,0.6); }
+  .garden { display: flex; gap: 35px; align-items: flex-end;
+    margin: 40px 0; flex-wrap: wrap; justify-content: center; }
+  .flower { position: relative; width: 55px; height: 200px; }
+  .stem {
+    position: absolute; bottom: 0; left: 50%;
+    width: 4px; height: 0; background: #2d6a4f;
+    transform: translateX(-50%); border-radius: 2px;
+    animation: grow 1.4s ease forwards;
+  }
+  .bloom {
+    position: absolute; top: -25px; left: 50%;
+    transform: translateX(-50%) scale(0); font-size: 52px;
+    animation: bloom 1.2s ease forwards;
+  }
+  @keyframes grow { to { height: 150px; } }
+  @keyframes bloom {
+    0%   { transform: translateX(-50%) scale(0); }
+    70%  { transform: translateX(-50%) scale(1.3); }
+    100% { transform: translateX(-50%) scale(1); }
+  }
+  .bouquet-text { color: #ffb6d0; font-size: 1.5em;
+    font-style: italic; margin-top: 20px; }
+
+  /* === 7. ФИНАЛ === */
+  .finale {
+    max-width: 800px; width: 100%;
+    margin: 20px auto;
+    padding: 50px 35px;
+    text-align: center;
+    background: linear-gradient(135deg, #16213e, #2a1a3e);
+    border: 2px solid #ff6b9d;
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(255,107,157,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .finale::before {
+    content: '💗';
+    position: absolute;
+    top: -20px; right: -20px;
+    font-size: 120px;
+    opacity: 0.08;
+  }
+  .finale h2 {
+    color: #ff6b9d;
+    font-size: clamp(1.6em, 5vw, 2em);
+    margin-bottom: 25px;
+    text-shadow: 0 0 20px rgba(255,107,157,0.6);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  .finale p {
+    font-size: 1.25em;
+    line-height: 1.9;
+    color: #ffe0ec;
+    margin-bottom: 15px;
+  }
+  .finale .big-love {
+    font-size: 1.6em;
+    color: #ff6b9d;
+    font-weight: bold;
+    margin-top: 30px;
+    text-shadow: 0 0 25px rgba(255,107,157,0.8);
+  }
+  .finale .sign {
+    margin-top: 30px;
+    font-style: italic;
+    color: #ffb6d0;
+    font-size: 1.1em;
+  }
+
+  /* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
+  @media (max-width: 600px) {
+    .event, .event:nth-child(even) { width: 90%; margin-left: 0; }
+    .timeline::before { display: none; }
+    .finale { padding: 35px 20px; }
+    .letter-box { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== 1. ЗАГЛАВНАЯ ===== -->
+  <section class="hero">
+    <h1>Лиза 💗</h1>
+    <div class="sub">Это для тебя. Прокрути вниз…</div>
+    <div class="scroll-hint">▼ листай ▼</div>
+  </section>
+
+  <!-- ===== 2. ТАЙМЛАЙН «НАША ИСТОРИЯ» ===== -->
+  <section>
+    <h2 class="timeline-title">Наша история 💞</h2>
+    <div class="timeline">
+      <div class="event"><span class="emoji">👀</span><br>
+        <span class="date">День знакомства</span><br>
+        Первый раз, когда я увидел тебя — и пропал.</div>
+      <div class="event"><span class="emoji">☕</span><br>
+        <span class="date">Наши первые объятия</span><br>
+        До сих пор помню тот трепет, ту теплоту и твой аромат, который свёл меня с ума.</div>
+      <div class="event"><span class="emoji">💋</span><br>
+        <span class="date">Тот самый разговор</span><br>
+        Момент, после которого я безоговорочно влюбился.</div>
+      <div class="event"><span class="emoji">🎉</span><br>
+        <span class="date">Сегодня</span><br>
+        И я всё ещё влюблён, как в первый день.</div>
+    </div>
+  </section>
+
+  <!-- ===== 3. ПИСЬМО ===== -->
+  <section>
+    <div class="letter-box">
+      <div id="typed"></div>
+    </div>
+  </section>
+
+  <!-- ===== 4. СЧЁТЧИК ===== -->
+  <section>
+    <div class="counter-title">С 1 августа я люблю тебя уже</div>
+    <div class="counter-num" id="counter">0</div>
+    <div class="counter-sub">секунд — и это только начало 💕</div>
+  </section>
+
+  <!-- ===== 5. ПРИЧИНЫ ===== -->
+  <section>
+    <h2 class="reasons-title">Почему ты моя любимая 💌</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">👀</div>
+        <p>Твои глаза — самые прекрасные на свете. Я могу в них утонуть.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🕊️</div>
+        <p>Когда я общаюсь с тобой, весь груз с души куда-то исчезает.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💞</div>
+        <p>Я люблю тебя бесконечно. Это не просто слова — это моё состояние.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌸</div>
+        <p>Ты делаешь обычные дни волшебными, просто находясь рядом.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. БУКЕТ ===== -->
+  <section>
+    <h2 class="bouquet-title">Букет для тебя 🌷</h2>
+    <div class="garden">
+      <div class="flower"><div class="stem" style="animation-delay:0s"></div><div class="bloom" style="animation-delay:1.4s">🌹</div></div>
+      <div class="flower"><div class="stem" style="animation-delay:0.2s"></div><div class="bloom" style="animation-delay:1.6s">🌷</div></div>
+      <div class="flower"><div class="stem" style="animation-delay:0.4s"></div><div class="bloom" style="animation-delay:1.8s">🌸</div></div>
+      <div class="flower"><div class="stem" style="animation-delay:0.6s"></div><div class="bloom" style="animation-delay:2.0s">💐</div></div>
+      <div class="flower"><div class="stem" style="animation-delay:0.8s"></div><div class="bloom" style="animation-delay:2.2s">🌺</div></div>
+    </div>
+    <div class="bouquet-text">Каждый цветок — это моё «люблю» 💗</div>
+  </section>
+
+  <!-- ===== 7. ФИНАЛ ===== -->
+  <section>
+    <div class="finale">
+      <h2>Лиза, это всё про тебя 💗</h2>
+      <p>Люблю тебя бесконечно.</p>
+      <p>Твои глаза — самые прекрасные на свете.</p>
+      <p>А общение с тобой снимает с души весь груз.</p>
+      <div class="big-love">Ты — моё всё 💕</div>
+      <div class="sign">— твой Бехруз ❤️</div>
+    </div>
+  </section>
+
+<script>
+  /* ===== ЛЕТЯЩИЕ СЕРДЕЧКИ ===== */
+  const hearts = ['💗','💖','💕','🌸','💞','🩷'];
+  setInterval(() => {
+    const h = document.createElement('div');
+    h.className = 'bg-heart';
+    h.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = (Math.random() * 22 + 14) + 'px';
+    h.style.animationDuration = (Math.random() * 6 + 7) + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 14000);
+  }, 500);
+
+  /* ===== ПЕЧАТАЮЩИЙСЯ ТЕКСТ ===== */
+  const message = `Дорогая Лиза,
+
+Я долго думал, как собрать в одном месте всё,
+что чувствую к тебе. И понял — слов не хватит.
+
+Люблю тебя бесконечно.
+Твои глаза — самые прекрасные на свете.
+А общение с тобой снимает с души весь груз.
+
+Ты — моё спокойствие, моя радость,
+моя самая родная девочка. 💗
+
+Спасибо, что ты есть.`;
+
+  let i = 0;
+  const typed = document.getElementById('typed');
+  function type() {
+    if (i < message.length) {
+      typed.innerHTML = message.slice(0, i + 1) + '<span class="cursor"></span>';
+      i++;
+      setTimeout(type, 45);
+    } else {
+      typed.innerHTML = message + '<span class="cursor"></span>';
+    }
+  }
+
+  /* ===== СЧЁТЧИК С 1 АВГУСТА ===== */
+  // 📅 ГОД знакомства — поменяй на нужный
+  const startDate = new Date(2023, 7, 1, 0, 0, 0); // 7 = август, 1 = первое число
+  const counterEl = document.getElementById('counter');
+  function updateCounter() {
+    const diff = Math.floor((Date.now() - startDate) / 1000);
+    counterEl.innerText = diff.toLocaleString('ru-RU');
+  }
+
+  /* ===== ЗАПУСК ===== */
+  setTimeout(type, 800);
+  updateCounter();
+  setInterval(updateCounter, 1000);
+</script>
+
+</body>
+</html>
